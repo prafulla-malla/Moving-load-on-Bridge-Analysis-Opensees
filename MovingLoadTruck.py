@@ -102,3 +102,26 @@ plt.xlabel("Length (ft)")
 plt.ylabel("Bending moment (kipft)")
 plt.title ("Bending moment at Critical locs.")
 ops.wipe()
+
+# Envelope BM and SF
+envBM=np.zeros( (nIP, 2) )  # Initial variable to store data
+envSF=np.zeros( (nIP, 3) )  # Initial variable to store data
+for m in range(nIP):     
+    envBM[m,0]=Criticallocs[m]*L/ft;
+    envBM[m,1]=np.max(np.abs(bM[:,(m+1)])); 
+    envSF[m,0]=Criticallocs[m]*L/ft;
+    envSF[m,1]=np.max((sF[:,(m+1)]));
+    envSF[m,2]=np.min((sF[:,(m+1)]));
+    
+plt.plot(envBM[:,0], envBM[:,1], linewidth=2.0)
+plt.xlabel("Length Bridge (ft)")
+plt.ylabel("Bending moment (kipft)")
+plt.title ("Bending moment Envelope")
+plt.show()
+
+plt.plot(envSF[:,0], envSF[:,1], linewidth=2.0)
+plt.plot(envSF[:,0], envSF[:,2], linewidth=2.0)
+plt.xlabel("Length Bridge (ft)")
+plt.ylabel("Shear Force (kip)")
+plt.title ("Shear Force Envelope")
+plt.show()
